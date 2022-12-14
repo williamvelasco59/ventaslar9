@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Models\Articulo;
 use Illuminate\Support\Facades\DB;
+// use Barryvdh\DomPDF\Facade\Pdf;
+use PDF;
 
 class CategoriaController extends Controller
 {
@@ -101,4 +104,33 @@ class CategoriaController extends Controller
 
         return redirect()->route('categoria.index');
     }
+
+    public function imprimir(){
+        $categorias = DB::table('categoria')->get();
+
+        $pdf = PDF::loadView('reportepdf', compact('categorias'));
+        return $pdf->download('reporte.pdf');
+   }
+
+   public function graficosbarras(){
+    $categorias = DB::table('categoria')->get();
+    $puntos = [];
+    foreach ($categorias as $categoria) {
+        $puntos[] = ['name'=> $categoria->nombre, 'y'=>$categoria->condicion];
+    }
+    // retorna una vista desde la carpeta de vistas
+    return view('almacen.categoria.graficosbarras', ["data"=>json_encode($puntos)]);
+    // return $puntos;
+   }
+
+   public function graficostortas(){
+    $categorias = DB::table('categoria')->get();
+    $puntos = [];
+    foreach ($categorias as $categoria) {
+        $puntos[] = ['name'=> $categoria->nombre, 'y'=>$categoria->condicion];
+    }
+    return view('almacen.categoria.graficostortas', ["data"=>json_encode($puntos)]);
+    // return $puntos;
+   }
+
 }

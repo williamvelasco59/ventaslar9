@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
 use Illuminate\Support\Facades\Route;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Support\Facades\File;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +20,18 @@ Route::get('/', function () {
     return view('layouts/admin');
 });
 
-Route::resource('/categoria', CategoriaController::class);
-// Route::resource('categoria', CategoriaController::class);
-// Route::get('/almacen/{categoria}/edit', [CategoriaController::class, 'edit'])->name('almacen.edit');
+Route::resource('categoria', CategoriaController::class);
+Route::resource('articulo', ArticuloController::class);
+
+
+
+Route::get('generarpdf', [CategoriaController::class, 'imprimir']);
+
+Route::get('generarpdfart', [ArticuloController::class, 'imprimir']);
+
+Route::get('graficosbarras', [CategoriaController::class, 'graficosbarras']);
+Route::get('graficostortas', [CategoriaController::class, 'graficostortas']);
+
+// articulos
+Route::get('graficobarraarti', [ArticuloController::class, 'graficosbarras']);
+Route::get('graficotortarti', [ArticuloController::class, 'graficotorta']);

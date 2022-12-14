@@ -15,6 +15,7 @@
 @section('contenido')
     <div class="container">
             <a href="{{route('categoria.create')}}" class="btn btn-success">Nuevo</a>
+            <a href="generarpdf" class="btn btn-primary">pdf</a>
     </div>
     <div class="container">
         <div class="table-responsive">
@@ -41,13 +42,12 @@
                         <td>{{ $categoria->condicion }}</td>
                         <td class="col">
                             <a class="btn btn-warning btn-sm" href="{{ route('categoria.edit', $categoria->idcategoria) }}">Editar</a>
-                            <form action="{{ route('categoria.destroy', $categoria->idcategoria) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" class="btn btn-danger btn-sm" value="eliminar">
-                            </form>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-delete-{{$categoria->idcategoria}}">
+                                Eliminar
+                            </button>
                         </td>   
                         </tr>
+                        @include('almacen.categoria.delete')
                     @endforeach
                 @endif
             </tbody>

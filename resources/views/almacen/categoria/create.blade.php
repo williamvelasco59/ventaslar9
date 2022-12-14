@@ -7,7 +7,7 @@
             @csrf
             <div class="mb-3">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" name="nombre" required>
+                <input type="text" class="form-control" name="nombre" required minlength="6">
             </div>
             <div class="mb-3">
                 <label for="categoria">Descripcion</label>
